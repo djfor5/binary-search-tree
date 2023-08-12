@@ -85,6 +85,21 @@ export default class Tree {
     }
   }
 
+  find(data, root = this.root) {
+    // base case
+    if (root === null) {
+      return false
+    } else if (data === root.data) {
+      return root
+    }
+
+    if (data < root.data) {
+      return this.find(data, root.left)
+    } else if (data > root.data) {
+      return this.find(data, root.right)
+    }
+  }
+
 }
 
 
@@ -103,5 +118,6 @@ tree.insert(1)
 tree.delete(4)
 tree.delete(23)
 tree.delete(67)
+console.log(tree.find(1))
 
 prettyPrint(tree.root)
