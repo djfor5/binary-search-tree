@@ -153,6 +153,23 @@ export default class Tree {
     }
   }
 
+  preorder(func, root = this.root, arr = []) {
+    if (root === null) {
+      return
+    }
+
+    if (!func) {
+      arr.push(root.data)
+      this.preorder(null, root.left, arr)
+      this.preorder(null, root.right, arr)
+      return arr
+    } else {
+      console.log(func(root));
+      this.preorder(func, root.left)
+      this.preorder(func, root.right)
+    }
+  }
+
 }
 
 
@@ -179,6 +196,9 @@ function func1(x) {
   return 2 * x.data
 }
 // console.log(tree.levelOrderIterative())
-console.log(tree.inorder(func1))
+// console.log(tree.inorder())
+// console.log(tree.inorder(func1))
+console.log(tree.preorder())
+console.log(tree.preorder(func1))
 
 prettyPrint(tree.root)
