@@ -187,6 +187,17 @@ export default class Tree {
     }
   }
 
+  height(node = this.root) {
+    if (node === null) {
+      return 0
+    }
+
+    const heightLeft = this.height(node.left) + 1
+    const heightRight = this.height(node.right) + 1
+    const maxHeight = Math.max(heightLeft, heightRight)
+    return maxHeight
+  }
+
 }
 
 
@@ -198,26 +209,35 @@ const n = cleanedArr.length
 const tree = new Tree()
 tree.buildTree(arr, 0, n - 1)
 
-tree.insert(2)
-tree.insert(43)
-tree.insert(6)
-tree.insert(1)
-tree.delete(4)
-tree.delete(23)
-tree.delete(67)
+// tree.insert(2)
+// tree.insert(43)
+// tree.insert(6)
+// tree.insert(1)
+
+// tree.delete(4)
+// tree.delete(23)
+// tree.delete(67)
+
 // console.log(tree.find(1))
-// tree.levelOrderIterative((x)=>{console.log(2*x.data)})
-// tree.levelOrderIterative(func1)
-// tree.levelOrderIterative((x)=>{(2*x.data)})
+
 function func1(x) {
   return 2 * x.data
 }
 // console.log(tree.levelOrderIterative())
+// tree.levelOrderIterative(func1)
+// tree.levelOrderIterative((x)=>{(2*x.data)})
+// tree.levelOrderIterative((x)=>{console.log(2*x.data)})
+
 // console.log(tree.inorder())
 // console.log(tree.inorder(func1))
+
 // console.log(tree.preorder())
 // console.log(tree.preorder(func1))
-console.log(tree.postorder())
+
+// console.log(tree.postorder())
 // console.log(tree.postorder(func1))
+
+console.log(tree.height())
+console.log(tree.height(tree.root))
 
 prettyPrint(tree.root)
