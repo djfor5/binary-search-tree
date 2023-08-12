@@ -4,7 +4,7 @@ import { prettyPrint } from "./pretty.js"
 export default class Tree {
   constructor(arr) {
     this.arr = arr || null
-    this.rootNode = null
+    this.root = null
   }
 
   buildTree(arr, start, end) {
@@ -21,12 +21,12 @@ export default class Tree {
     rootNode.left = this.buildTree(arr, start, midIndex - 1)
     rootNode.right = this.buildTree(arr, midIndex + 1, end)
 
-    this.rootNode = rootNode
+    this.root = rootNode
 
     return rootNode
   }
 
-  insert(data, root = this.rootNode) {
+  insert(data, root = this.root) {
     // base case
     if (root == null) {
       root = new Node(data)
@@ -42,48 +42,45 @@ export default class Tree {
     return root
   }
 
-  // delete(data, root = this.rootNode) {
-  //   // base case
-  //   if (root == null) {
-  //     return root
-  //   }
+  delete(data, root = this.root) {
+    // base case
+    if (root === null) {
+      return root
+    }
 
-  //   // recursively traverse BST
-  //   if (data < root.data) {
-  //     root.left = delete(data, root.left)
-  //     return root
-  //   } else if (data > root.data) {
-  //     root.right = delete(data, root.right)
-  //     return root
-  //   }
+    // recursively traverse BST
+    if (data < root.data) {
+      root.left = this.delete(data, root.left)
+      return root
+    } else if (data > root.data) {
+      root.right = this.delete(data, root.right)
+      return root
+    }
 
-  //   // if one child is null
-  //   if (root.left == null) {
-  //     let temp = root.right
-  //     // delete root
-  //     return temp
-  //   } else if (root.right == null) {
-  //     let temp = root.left
-  //     // delete root
-  //     return temp
-  //   } else { // if both child nodes exist
-  //     let succParent = root
-  //     let succ = root.right // find successor
-  //     while (succ.left !== null) {
-  //       succParent = succ
-  //       succ = succ.left
-  //     }
-  //     // delete successor
-  //     if (succParent !== root) {
-  //       succParent.left = succ.right
-  //     } else {
-  //       succParent.right = succ.right
-  //     }
-  //     root.data = succ.data // copy successor data to root
-  //     // delete succ
-  //     return root
-  //   }
-  // }
+    // this code runs only if root is the node to be deleted (data === root.data)
+    if (root.left === null) { // if one child is null
+      let temp = root.right
+      return temp
+    } else if (root.right === null) { // if one child is null
+      let temp = root.left
+      return temp
+    } else { // if both child nodes exist
+      let succParent = root
+      let succ = root.right // find successor
+      while (succ.left !== null) { // traverse to left-most node of right subtree
+        succParent = succ
+        succ = succ.left
+      }
+      // delete successor
+      if (succParent !== root) {
+        succParent.left = succ.right
+      } else {
+        succParent.right = succ.right
+      }
+      root.data = succ.data // copy successor data to root
+      return root
+    }
+  }
 
 }
 
@@ -96,9 +93,11 @@ const n = cleanedArr.length
 const tree = new Tree()
 const root = tree.buildTree(arr, 0, n - 1)
 
-console.log(tree.insert(2))
-// console.log(tree.delete(7))
-// console.log(tree.delete(9))
+tree.insert(2)
+tree.insert(43)
+tree.insert(6)
+tree.delete(4)
+tree.delete(23)
+tree.delete(67)
 
-console.log(tree.rootNode.left.left.right.left);
-prettyPrint(root)
+prettyPrint(tree.root)
