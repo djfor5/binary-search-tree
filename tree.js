@@ -188,7 +188,10 @@ export default class Tree {
   }
 
   height(node = this.root) {
-    if (node === null) {
+    // base case
+    if (node === null) { // empty BST
+      return 0
+    } else if (node.left === null && node.right === null) { // leaf node (includes BST with only a single node)
       return 0
     }
 
@@ -196,6 +199,10 @@ export default class Tree {
     const heightRight = this.height(node.right) + 1
     const maxHeight = Math.max(heightLeft, heightRight)
     return maxHeight
+  }
+
+  depth(node = this.root) {
+    return this.height() - this.height(node)
   }
 
 }
@@ -237,7 +244,14 @@ function func1(x) {
 // console.log(tree.postorder())
 // console.log(tree.postorder(func1))
 
-console.log(tree.height())
-console.log(tree.height(tree.root))
+// console.log(tree.height())
+// console.log(tree.height(tree.root))
+
+console.log(tree.depth())
+console.log(tree.depth(tree.root.right.right))
+// console.log(tree.height(tree.root))
+// console.log(tree.root);
+
+// console.log(tree.height(tree.root.right))
 
 prettyPrint(tree.root)
