@@ -100,6 +100,42 @@ export default class Tree {
     }
   }
 
+  levelOrderIterative(func, root = this.root, arr = [root]) {
+    if (root === null) return []
+
+    if (!func) {
+      let arrValues = []
+      arrValues.push(root.data)
+      let n = 0
+      while (n <= arr.length - 1) {
+        const current = arr[n]
+        if (current.left !== null) {
+          arr.push(current.left)
+          arrValues.push(current.left.data)
+        }
+        if (current.right !== null) {
+          arr.push(current.right)
+          arrValues.push(current.right.data)
+        }
+        n++
+      }
+      return arrValues
+    }
+
+    // let arrValuesFunc = []
+    while (arr.length) {
+      let current = arr.shift()
+      if (current.left !== null) arr.push(current.left)
+      if (current.right !== null) arr.push(current.right)
+      // func(current)
+      const result = func(current)
+      console.log(result);
+      
+      // arrValuesFunc.push(result)
+    }
+    // return arrValuesFunc
+  }
+
 }
 
 
@@ -118,6 +154,13 @@ tree.insert(1)
 tree.delete(4)
 tree.delete(23)
 tree.delete(67)
-console.log(tree.find(1))
+// console.log(tree.find(1))
+// tree.levelOrderIterative((x)=>{console.log(2*x.data)})
+tree.levelOrderIterative(func1)
+// tree.levelOrderIterative((x)=>{(2*x.data)})
+function func1(x) {
+  return 2 * x.data
+}
+// console.log(tree.levelOrderIterative())
 
 prettyPrint(tree.root)
