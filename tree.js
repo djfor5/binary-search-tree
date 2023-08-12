@@ -30,6 +30,7 @@ export default class Tree {
     // base case
     if (root == null) {
       root = new Node(data)
+      this.root = root
       return root
     }
 
@@ -38,6 +39,8 @@ export default class Tree {
     } else if (data > root.data) {
         root.right = this.insert(data, root.right)
     }
+
+    this.root = root
 
     return root
   }
@@ -91,11 +94,12 @@ const n = cleanedArr.length
 // console.log(cleanedArr);
 
 const tree = new Tree()
-const root = tree.buildTree(arr, 0, n - 1)
+tree.buildTree(arr, 0, n - 1)
 
 tree.insert(2)
 tree.insert(43)
 tree.insert(6)
+tree.insert(1)
 tree.delete(4)
 tree.delete(23)
 tree.delete(67)
