@@ -216,8 +216,14 @@ export default class Tree {
     if (heightDiff > 1) {
       return false;
     }
-    
+
     return this.isBalanced(root.left) && this.isBalanced(root.right);
+  }
+
+  rebalance() {
+    const arr = this.inorder()
+    this.root = null
+    this.buildTree(arr, 0, arr.length - 1)
   }
 
 }
@@ -273,5 +279,9 @@ console.log(tree.isBalanced())
 
 
 // console.log(tree.height(tree.root.right))
+
+prettyPrint(tree.root)
+
+console.log(tree.rebalance())
 
 prettyPrint(tree.root)
