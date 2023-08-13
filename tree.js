@@ -205,6 +205,21 @@ export default class Tree {
     return this.height() - this.height(node)
   }
 
+  isBalanced(root = this.root) {
+    if (root === null) {
+      return true;
+    }
+
+    const heightLeft = this.height(root.left);
+    const heightRight = this.height(root.right);
+    const heightDiff = Math.abs(heightLeft - heightRight);
+    if (heightDiff > 1) {
+      return false;
+    }
+    
+    return this.isBalanced(root.left) && this.isBalanced(root.right);
+  }
+
 }
 
 
@@ -220,6 +235,10 @@ tree.buildTree(arr, 0, n - 1)
 // tree.insert(43)
 // tree.insert(6)
 // tree.insert(1)
+tree.insert(10000)
+tree.insert(100000)
+tree.insert(1000000)
+tree.insert(10000000)
 
 // tree.delete(4)
 // tree.delete(23)
@@ -247,10 +266,11 @@ function func1(x) {
 // console.log(tree.height())
 // console.log(tree.height(tree.root))
 
-console.log(tree.depth())
-console.log(tree.depth(tree.root.right.right))
-// console.log(tree.height(tree.root))
-// console.log(tree.root);
+// console.log(tree.depth())
+// console.log(tree.depth(tree.root.right.right))
+
+console.log(tree.isBalanced())
+
 
 // console.log(tree.height(tree.root.right))
 
