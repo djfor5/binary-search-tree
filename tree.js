@@ -3,14 +3,19 @@ import { prettyPrint } from "./pretty.js"
 
 export default class Tree {
   constructor(arr) {
-    this.arr = arr || null
     this.root = null
+    this.buildTree(arr)
   }
 
-  buildTree(arr, start, end) {
+  buildTree(arr, start = 0, endOriginal) {
     let newArr = [...new Set(arr)] // remove duplicate values from array
     newArr.sort( (a, b) => a - b ) // sort array numerically
     
+    let end = endOriginal
+    if (endOriginal === undefined) {
+      end = newArr.length - 1 // this allows initial function call with just the 'arr' argument (start and end set by default based on length of array of unique numbers)
+    }
+
     if (start > end) {
       return null
     }
@@ -223,7 +228,7 @@ export default class Tree {
   rebalance() {
     const arr = this.inorder()
     this.root = null
-    this.buildTree(arr, 0, arr.length - 1)
+    this.buildTree(arr)
   }
 
 }
@@ -235,7 +240,9 @@ const n = cleanedArr.length
 // console.log(cleanedArr);
 
 const tree = new Tree()
-tree.buildTree(arr, 0, n - 1)
+// const tree = new Tree(arr)
+// tree.buildTree(arr, 0, n - 1)
+tree.buildTree(arr)
 
 // tree.insert(2)
 // tree.insert(43)
